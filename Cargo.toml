@@ -1,0 +1,12 @@
+[package]
+name = "file-rename-rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+clap = "4.5.53"
+colored = "3.0.0"
+regex = "1.12.2"
+thiserror = "2.0.17"
+walkdir = "2.5.0"
