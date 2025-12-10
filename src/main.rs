@@ -1,8 +1,10 @@
 mod utils;
+mod models;
 
-use anyhow::Ok;
 use clap::Parser;
 use colored::Colorize;
+
+use crate::{models::DirectoryFile, utils::scan_folder};
 
 #[derive(Parser, Debug)]
 #[command(name = "file-rename-rs", version)]
@@ -17,6 +19,18 @@ fn main() -> Result<(), anyhow::Error> {
     if let Err(e) = utils::validate_directory(&args.dir) {
         eprintln!("{} {}", "Error:".red().bold(), e);
         return Ok(());
+    }
+
+    let files: Vec<DirectoryFile> = match scan_folder(&args.dir) {
+        Ok(f) => f,
+        Err(e) => {
+            eprintln!("{} {}", "Error:".red().bold(), e);
+            return Ok(());
+        }
+    };
+
+    for file in files {
+        eprintln!("Found file - name: {:?}, path: {:?}", file.name, file.path);
     }
 
     Ok(())
